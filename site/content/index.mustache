@@ -1,0 +1,19 @@
+---
+layout: index.mustache
+pagination:
+  data: collections.postDesc
+  size: 10
+---
+{{#pagination.items}}
+{{{templateContent}}}
+{{/pagination.items}}
+<nav>
+  <ol>
+    {{#pagination.href.previous}}
+    <li><a href="{{pagination.href.previous}}">previous</a></li>
+    {{/pagination.href.previous}}
+    {{#pagination.href.next}}
+    <li><a href="{{pagination.href.next}}">next</a></li>
+    {{/pagination.href.next}}
+  </ol>
+</nav>

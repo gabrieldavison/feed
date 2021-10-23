@@ -27,9 +27,10 @@ app.post('/', upload.array("files"), async (req, res) => {
             await fs.promises.rename(fileDir, `/${destinationDir}/${file.originalname}`);
         };
         const imageTags = req.files.reduce((acc, curr) => {
-            return acc + `\n![${curr.originalname}](./${curr.originalname})`;
+            return acc + `\n<img loading="lazy" src="/posts/${postDirName}/${curr.originalname}"></img>`;
         }, "");
-        const frontMatter = '---\ntags: post\n---\n';
+        // const frontMatter = `---\ntags: post\ndate: ${Date.now()}\nreadableDate: ${postDirName}\n---\n`;
+        const frontMatter = `---\ntags: post\ndate: ${postDirName.replace("T", " ")}\n---\n`;
         const imageBlock = `<div>${imageTags}</div>`;
         const postBody = `\n\n${req.body.postBody}`;
         await fs.promises.writeFile(`${destinationDir}/${postDirName}.md`, frontMatter + imageBlock + postBody);
@@ -42,5 +43,5 @@ app.post('/', upload.array("files"), async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+    console.log(`app listening at http://localhost:${port}`);
 });
